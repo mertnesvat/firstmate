@@ -964,12 +964,12 @@ test_teardown_conformance_old_vs_new() {
   expect_code 0 "$rc_new" "new fm-teardown.sh (scout, report present) should succeed"$'\n'"$out_new"
   assert_contains "$(cat "$log_new")" "treehouse"$'\x1f''return'$'\x1f''--force'$'\x1f'"$wt" \
     "teardown did not call treehouse return --force <worktree>"
-  assert_contains "$(cat "$log_old")" "tmux"$'\x1f''kill-window'$'\x1f''-t'$'\x1f'"firstmate:fm-$id" \
-    "legacy teardown fixture did not exercise tmux's permissive target selector"
+  assert_contains "$(cat "$log_old")" "tmux"$'\x1f''kill-window'$'\x1f''-t'$'\x1f'"=firstmate:=fm-$id" \
+    "baseline teardown fixture did not preserve exact session and window selectors"
   assert_contains "$(cat "$log_new")" "tmux"$'\x1f''kill-window'$'\x1f''-t'$'\x1f'"=firstmate:=fm-$id" \
     "teardown did not call tmux kill-window with exact session and window selectors"
 
-  pass "fm-teardown.sh: treehouse return remains compatible while tmux cleanup uses exact selectors"
+  pass "fm-teardown.sh: treehouse return remains compatible while baseline and current tmux cleanup use exact selectors"
 }
 
 # --- backend selection loudly refuses an unknown backend --------------------
